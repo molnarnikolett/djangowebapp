@@ -1,0 +1,74 @@
+{% extends "auction/base.html" %}
+
+{% block content %}
+<h2 class="mb-4">Licitálás – {{ item.name }}</h2>
+
+<div class="row">
+    <div class="col-md-6 col-lg-5">
+        <div class="card mb-3">
+            {% if item.image %}
+                <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ item.name }}</h5>
+                <p class="card-text mb-1">
+                    <strong>Kategória:</strong> {{ item.get_category_display }}
+                </p>
+                <p class="card-text mb-1">
+                    <strong>Induló ár:</strong> {{ item.starting_price }} HUF
+                </p>
+                <p class="card-text mb-1">
+                    <strong>Jelenlegi ár:</strong>
+                    {% if item.current_price %}
+                        {{ item.current_price }} HUF
+                    {% else %}
+                        {{ item.starting_price }} HUF
+                    {% endif %}
+                </p>
+                <p class="card-text mb-1">
+                    <strong>Árverés ideje:</strong> {{ item.auction_time }}
+                </p>
+                {% if item.winner %}
+                    <p class="card-text">
+                        <strong>Jelenlegi legmagasabb licitáló:</strong> {{ item.winner.username }}
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <h4>Új licit</h4>
+
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                Kérjük, javítsd az alábbi hibákat.
+            </div>
+        {% endif %}
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label">
+                    Ajánlott összeg (HUF) – legalább
+                    {% if current_price %}
+                        {{ current_price }}
+                    {% else %}
+                        {{ item.starting_price }}
+                    {% endif %}
+                </label>
+                {{ form.amount }}
+                {% if form.amount.errors %}
+                    <div class="text-danger small">
+                        {{ form.amount.errors.0 }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Licit elküldése</button>
+            <a href="{% url 'items' %}" class="btn btn-secondary ms-2">Mégsem</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

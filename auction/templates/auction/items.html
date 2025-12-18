@@ -1,0 +1,125 @@
+{% extends "auction/base.html" %}
+
+{% block content %}
+<h2 class="mb-4">Aukcióra meghirdetett műtárgyak</h2>
+
+{% if page_obj %}
+<div class="table-responsive">
+    <table class="table table-striped table-bordered align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Megnevezés</th>
+                <th>Kategória</th>
+                <th>Induló ár (HUF)</th>
+                <th>Árverés ideje</th>
+                <th>Kép</th>
+                <th>Aukció</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in page_obj %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.get_category_display }}</td>
+                <td>{{ item.starting_price }}</td>
+                <td>{{ item.auction_time }}</td>
+                <td>
+                    {% if item.image %}
+                    <img src="{{ item.image.url }}" style="width: 120px; height: auto; border-radius: 6px;"
+                        alt="{{ item.name }}">
+                    {% else %}
+                    <span class="text-muted">Nincs kép</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {# Árverező: aukció kezelése #}
+                    {% if is_auctioneer %}
+                    {% if item.is_active %}
+                    <a href="{% url 'stop_auction' item.id %}" class="btn btn-danger btn-sm mb-1">
+                        Leállítás
+                    </a>
+                    {% elif item.is_closed %}
+                    {% if item.winner and item.current_price %}
+                    <div class="small">
+                        <strong>Elkelt:</strong> {{ item.winner.username }}<br>
+                        <strong>Végső ár:</strong> {{ item.current_price }} HUF
+                    </div>
+                    {% else %}
+                    <span class="text-muted small">Aukció lezárva (nincs érvényes licit)</span>
+                    {% endif %}
+                    {% else %}
+                    {# Még el sem indult az aukció – itt kell az INDÍTÁS gomb #}
+                    <a href="{% url 'start_auction' item.id %}" class="btn btn-success btn-sm mb-1">
+                        Indítás
+                    </a>
+                    {% endif %}
+
+                    {# Nem árverező felhasználó #}
+                    {% else %}
+                    {% if user.is_authenticated %}
+                    {% if item.is_active %}
+                    <a href="{% url 'bid' item.id %}" class="btn btn-primary btn-sm">
+                        Licitálok
+                    </a>
+                    {% elif item.is_closed %}
+                    {% if item.winner and item.current_price %}
+                    <div class="small">
+                        <strong>Elkelt:</strong> {{ item.winner.username }}<br>
+                        <strong>Végső ár:</strong> {{ item.current_price }} HUF
+                    </div>
+                    {% else %}
+                    <span class="text-muted small">Aukció lezárva</span>
+                    {% endif %}
+                    {% else %}
+                    <span class="text-muted small">Aukció még nem indult el</span>
+                    {% endif %}
+                    {% else %}
+                    {% if item.is_active %}
+                    <a href="{% url 'login' %}" class="btn btn-outline-secondary btn-sm">
+                        Jelentkezz be a licithez
+                    </a>
+                    {% elif item.is_closed %}
+                    <span class="text-muted small">
+                        Aukció lezárult (jelentkezz be a részletekhez)
+                    </span>
+                    {% else %}
+                    <span class="text-muted small">Aukció még nem indult el</span>
+                    {% endif %}
+                    {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Lapozás -->
+<nav aria-label="Oldalak">
+    <ul class="pagination justify-content-center mt-3">
+
+        {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page=1">&laquo; Első</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Előző</a></li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">&laquo; Első</span></li>
+        <li class="page-item disabled"><span class="page-link">Előző</span></li>
+        {% endif %}
+
+        <li class="page-item active">
+            <span class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+        </li>
+
+        {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Következő</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Utolsó &raquo;</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">Következő</span></li>
+        <li class="page-item disabled"><span class="page-link">Utolsó &raquo;</span></li>
+        {% endif %}
+    </ul>
+</nav>
+
+{% endif %}
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "auction/base.html" %}
+
+{% block content %}
+<h2 class="mb-4">Tárgyak kezelése</h2>
+
+<p>
+    <a href="{% url 'create_item' %}" class="btn btn-success mb-3">Új tárgy hozzáadása</a>
+</p>
+
+<table class="table table-striped table-bordered align-middle">
+    <thead class="table-dark">
+        <tr>
+            <th>Megnevezés</th>
+            <th>Kategória</th>
+            <th>Induló ár (HUF)</th>
+            <th>Árverés ideje</th>
+            <th>Műveletek</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.get_category_display }}</td>
+            <td>{{ item.starting_price }}</td>
+            <td>{{ item.auction_time }}</td>
+            <td>
+                <a href="{% url 'edit_item' item.id %}" class="btn btn-sm btn-primary">Szerkesztés</a>
+                <a href="{% url 'delete_item' item.id %}" class="btn btn-sm btn-danger">Törlés</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" class="text-center text-muted">Még nincs egyetlen tárgy sem.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

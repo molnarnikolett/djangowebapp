@@ -1,0 +1,98 @@
+{% extends "auction/base.html" %}
+{% load static %}
+
+
+{% block content %}
+<div class="mb-4">
+    <h2 class="mb-3">Munkatársaink</h2>
+    <p>
+        Csapatunk tapasztalt szakértőkből áll, akik a műtárgyak, ékszerek és porcelánok
+        világában naprakész tudással és elhivatottsággal dolgoznak azon, hogy minden
+        aukció zökkenőmentesen és átláthatóan valósuljon meg.
+    </p>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 text-center p-3">
+            <img src="{% static 'auction/staff/anna.jpg' %}" class="rounded-circle mb-3 staff-photo" alt="Kovács Anna">
+            <h5 class="card-title mb-1">Kovács Anna</h5>
+            <h6 class="card-subtitle text-muted mb-2">Aukciós vezető</h6>
+            <p class="card-text">
+                Több mint 15 éves tapasztalattal rendelkezik a műtárgypiacon, és ő felel
+                az aukciók lebonyolításáért, a licitek felügyeletéért és az ügyfelekkel
+                való kapcsolattartásért.
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 text-center p-3">
+            <img src="{% static 'auction/staff/bela.jpg' %}" class="rounded-circle mb-3 staff-photo" alt="Nagy Béla">
+            <h5 class="card-title mb-1">Nagy Béla</h5>
+            <h6 class="card-subtitle text-muted mb-2">Művészettörténész</h6>
+            <p class="card-text">
+                Festményekre és grafikákra specializálódott szakember, aki az egyes
+                műtárgyak eredetiségét, korát és művészettörténeti jelentőségét vizsgálja.
+            </p>
+        </div>
+    </div>
+
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 text-center p-3">
+            <img src="{% static 'auction/staff/csilla.jpg' %}" class="rounded-circle mb-3 staff-photo"
+                alt="Tóth Csilla">
+            <h5 class="card-title mb-1">Tóth Csilla</h5>
+            <h6 class="card-subtitle text-muted mb-2">Értékbecslő</h6>
+            <p class="card-text">
+                Az ékszerek és ritka porcelánok szakértője, feladata a műtárgyak piaci
+                értékének meghatározása és az induló árak megállapítása.
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 text-center p-3">
+            <img src="{% static 'auction/staff/gergely.jpg' %}" class="rounded-circle mb-3 staff-photo"
+                alt="Szabó Gergely">
+            <h5 class="card-title mb-1">Szabó Gergely</h5>
+            <h6 class="card-subtitle text-muted mb-2">Online aukciós koordinátor</h6>
+            <p class="card-text">
+                A webes aukciós felület technikai működéséért, az online licitek
+                kezeléséért és az ügyfélszolgálati kérdések megválaszolásáért felel.
+            </p>
+        </div>
+    </div>
+
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 text-center p-3">
+            <img src="{% static 'auction/staff/eszter.jpg' %}" class="rounded-circle mb-3 staff-photo"
+                alt="Farkas Eszter">
+            <h5 class="card-title mb-1">Farkas Eszter</h5>
+            <h6 class="card-subtitle text-muted mb-2">Ügyfélkapcsolati menedzser</h6>
+            <p class="card-text">
+                Segíti a regisztráló eladókat és vásárlókat, tájékoztatja őket az
+                aukciós feltételekről, és végigkíséri az ügymenetet a jelentkezéstől
+                a sikeres értékesítésig.
+            </p>
+        </div>
+    </div>
+
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 text-center p-3">
+            <img src="{% static 'auction/staff/tamas.jpg' %}" class="rounded-circle mb-3 staff-photo" alt="Jakab Tamás">
+            <h5 class="card-title mb-1">Jakab Tamás</h5>
+            <h6 class="card-subtitle text-muted mb-2">Raktár- és logisztikai vezető</h6>
+            <p class="card-text">
+                A műtárgyak biztonságos átvételéért, tárolásáért és szállításáért felel.
+                Gondoskodik arról, hogy minden darab sérülésmentesen jusson el az új
+                tulajdonosához.
+            </p>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

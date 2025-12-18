@@ -1,0 +1,19 @@
+{% extends "auction/base.html" %}
+
+{% block content %}
+<h2 class="mb-4">Tárgy törlése</h2>
+
+<p>Biztosan törölni szeretnéd ezt a tárgyat?</p>
+
+<ul>
+    <li><strong>Megnevezés:</strong> {{ item.name }}</li>
+    <li><strong>Kategória:</strong> {{ item.get_category_display }}</li>
+    <li><strong>Induló ár:</strong> {{ item.starting_price }} HUF</li>
+</ul>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Igen, törlés</button>
+    <a href="{% url 'manage_items' %}" class="btn btn-secondary ms-2">Mégsem</a>
+</form>
+{% endblock %}
